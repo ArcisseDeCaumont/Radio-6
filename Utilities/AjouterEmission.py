@@ -7,8 +7,10 @@ import shutil
 from pydub import AudioSegment
 from bs4 import BeautifulSoup
 import sys
-import requests
 import Errors
+from datetime import datetime
+import WebsiteManager
+import SupprimerEmission
 
 chroniques = []
 spreadsheet_path = ""
@@ -25,34 +27,7 @@ app.title("ModifierSiteWeb")
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
-def commit_changes():
-    global changed_files
-    global app
-    repo_path = f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/"
-    os.chdir(repo_path)
-    
-    try:        
-        subprocess.run(['git', 'add', '-A'], check=True, capture_output=True, text=True)
-        print("All changes added to staging.")
 
-        status_result = subprocess.run(['git', 'status', '--porcelain'], check=True, capture_output=True, text=True)
-        if not status_result.stdout.strip():
-            print("No changes to commit, skipping.")
-            return
-
-        commit_result = subprocess.run(['git', 'commit', '-m', "Upload automatique"], check=True, capture_output=True, text=True)
-        print("Changes committed.")
-        print("Commit Output:", commit_result.stdout)
-
-        push_result = subprocess.run(['git', 'push'], check=True, capture_output=True, text=True, timeout=700)
-        print("All changes pushed successfully.")
-        print("Push Output:", push_result.stdout)
-
-    except subprocess.CalledProcessError as e:
-        print(e)
-        print(e.stderr)
-        Errors.raise_error(app, "Erreur lors de la synchronisation GitHub.", "ModifierSiteWeb.py", mail=True, specific_error=e)
-        return
 
 
 class Chronique:
@@ -99,6 +74,7 @@ def modify_html():
     global audio_path
     global chroniques
     global changed_files
+    global app
 
     with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/émissions.html", "r", encoding="utf-8") as f :
         soup = BeautifulSoup(f, "html.parser")
@@ -145,12 +121,12 @@ def modify_html():
         </div>
     """
     soup_ajout = BeautifulSoup(html_ajout, "html.parser")
-    div = soup.find("div", {"class": "conteneur-émissions"})
-    if div :
-        div.insert(0, soup_ajout)
-    else :
-        print("div = None !")
-        sys.exit()
+    dates_émissions = soup.find_all("h3", {"class" : "date-émission"})
+    spreadsheet_date_formatted = datetime.strptime(spreadsheet_date, "%d/%m/%Y")
+    for date in dates_émissions :
+        if datetime.strptime(date.text, '%d/%m/%Y') < spreadsheet_date_formatted :
+            soup.find("div", {"class" : "conteneur-émissions"}).insert(dates_émissions.index(date), soup_ajout)
+            break
     with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/émissions.html", "w", encoding="utf-8") as f :
         f.write(str(soup))
         f.close()
@@ -179,15 +155,18 @@ def modify_html():
                 </div>
             </div>
         """
-            soup_ajout_chroniques = BeautifulSoup(html_ajout_chroniques, "html.parser")
-            div = soup.find("div", {"class": "conteneur-podcasts"})
-            print(type(div))
-            div.insert(0, soup_ajout_chroniques)
+            dates_émissions = soup.find_all("h3", {"class" : "date-émission"})
+            spreadsheet_date_formatted = datetime.strptime(spreadsheet_date, "%d/%m/%Y")
+            for date in dates_émissions :
+                if datetime.strptime(date.text.split(" - ")[-1], '%d/%m/%Y') < spreadsheet_date_formatted :
+                    soup.find("div", {"class" : "conteneur-émissions"}).insert(dates_émissions.index(date), soup_ajout)
+                    break
             with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/{noms_chroniques_podcasts[chronique.type]}", "w", encoding="utf-8") as f :
                 f.write(str(soup))
                 f.close()
 
-    commit_changes()
+    if WebsiteManager.commit_changes(app) == "error" :
+        SupprimerEmission.delete_program(spreadsheet_title)
 
 def process_info():
     print("Process Info")
@@ -252,13 +231,14 @@ def select_audio():
     except shutil.Error :
         pass
 
-bouton_tableur = ctk.CTkButton(master=app, text="Sélectionner le fichier infos", command=lambda : select_spreadsheet(app))
-bouton_tableur.pack(pady=5)
+def main():
+    bouton_tableur = ctk.CTkButton(master=app, text="Sélectionner le fichier infos", command=lambda : select_spreadsheet(app))
+    bouton_tableur.pack(pady=5)
 
-bouton_audio = ctk.CTkButton(master=app, text="Sélectionner le fichier audio", command=select_audio)
-bouton_audio.pack(pady=10)
+    bouton_audio = ctk.CTkButton(master=app, text="Sélectionner le fichier audio", command=select_audio)
+    bouton_audio.pack(pady=10)
 
-bouton_validation = ctk.CTkButton(master=app, text="Valider les informations", command=process_info, fg_color="white", text_color="black", hover_color="grey")
-bouton_validation.pack(pady=10)
+    bouton_validation = ctk.CTkButton(master=app, text="Valider les informations", command=process_info, fg_color="white", text_color="black", hover_color="grey")
+    bouton_validation.pack(pady=10)
 
-app.mainloop()
+    app.mainloop()

@@ -2,6 +2,7 @@ import requests
 import tkinter as tk
 import customtkinter as ctk
 import time
+import sentry_sdk
 
 def raise_error(app, error, tool, mail = False, specific_error = None) :
     app.destroy()
@@ -23,43 +24,13 @@ def raise_error(app, error, tool, mail = False, specific_error = None) :
     return app
 
 def send_email_error(general_error, specific_error, tool) :
-    API_KEY = 'a70e4f2a288cedbb6ee2a7400b35b2bc-0ce15100-4db55af5'
-    DOMAIN = 'sandboxb632eaab2fa5464db7cd429072be3408.mailgun.org'
-    API_BASE_URL = 'https://api.mailgun.net/v3'
-    FROM_EMAIL = f'Rapport d\'erreur <mailgun@{DOMAIN}>'
-    TO_EMAIL = 'oscar.mazeure@orange.fr'
-    SUBJECT = f'{time.strftime("%d/%m/%Y", time.localtime())} - {general_error}'
-    HTML_CONTENT = f'''<h2>Date : {time.strftime("%d/%m/%Y", time.localtime())}</h2><br>
-                       <h2>Outil utilisé : {tool}</h2><br>
-                       <h2>Erreur générale : {general_error}</h2><br>
-                       <h2>Détails de l'erreur : {specific_error}</h2><br>
-    specific_error'''
-    TEXT_CONTENT = f'Date : {time.strftime("%d/%m/%Y", time.localtime())}\nOutil utilisé : {tool}\nErreur générale : {general_error}\nDétails de l\'erreur : {specific_error}'
+    sentry_sdk.init(
+        dsn="https://51140a20e915ca042dbe4bf523d7103f@o4509700906352640.ingest.de.sentry.io/4509700953079888",
+        send_default_pii=True,
+    )
+    sentry_sdk.capture_exception(specific_error)
 
-    try :
-        response = requests.post(
-            f"{API_BASE_URL}/{DOMAIN}/messages",
-            auth=("api", API_KEY),
-            data={
-                "from" : FROM_EMAIL,
-                "to" : TO_EMAIL,
-                "subject" : SUBJECT,
-                "html" : HTML_CONTENT,
-                "text" : TEXT_CONTENT
-            }
-        )
-
-        if response.status_code == 200:
-            print(f"Email envoyé avec succès !")
-            print(f"Réponse de Mailgun: {response.json()}")
-        else:
-            print(f"Erreur lors de l'envoi de l'email. Code de statut: {response.status_code}")
-            print(f"Réponse de Mailgun: {response.json()}")
-
-    except Exception as e:
-        print(e)
-
-"""app = ctk.CTk()
+app = ctk.CTk()
 app.geometry("775x400")
 app.title("ModifierSiteWeb")
 ctk.set_appearance_mode("System")
@@ -68,4 +39,4 @@ ctk.set_default_color_theme("blue")
 bouton_erreur = ctk.CTkButton(master=app, text="Test de la fonction erreur", command=lambda : raise_error(app, "Erreur générale test !", "Outil test", mail=True, specific_error="Erreur détaillée\nDétails supplémentaires"))
 bouton_erreur.pack(pady=5)
 
-app.mainloop()"""
+app.mainloop()
