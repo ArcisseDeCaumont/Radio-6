@@ -525,24 +525,31 @@ body {
 
 
 
+.conteneur-boutons-podcasts{
 
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 100px;
+
+}
 
 .div-bouton-podcast-background {
 
   background-color: var(--secondary-color);
   height: fit-content + 4px;
   width: 363px;
-  margin: 0 auto;
   border-radius: 10px;
   display: flex;
+  justify-self:baseline;
   padding: 2px;
   padding-left: 2px;
   padding-right: 2.5px;
   padding-bottom: 3px;
   padding-top: 2px;
-  margin-top: 20px;
-  margin-bottom: 30px ;
-  display: block;
+  margin-top: 10px;
+  margin-bottom: -50px;
 
 }
 
@@ -555,7 +562,6 @@ body {
   background-attachment: fixed;
   height: fit-content + 4px;
   width: 363px;
-  margin: 0 auto;
   border-radius: 10px;
   display: flex;
   padding: 2px;
@@ -563,10 +569,9 @@ body {
   padding-right: 2.5px;
   padding-bottom: 3px;
   padding-top: 2px;
-  margin-top: 20px;
-  margin-bottom: 30px ;
+  margin-top: 10px;
+  margin-bottom: -50px;
   cursor: pointer;
-
 }
 
 .div-bouton-podcast {
@@ -606,14 +611,6 @@ body {
   
 }
 
-.div-ligne {
-
-  display: flex;
-  padding-left: 60px;
-  padding-right: 60px;
-
-}
-
 .div-contenu-bouton-podcast {
 
   display: flex;
@@ -646,12 +643,6 @@ body {
 
   display: flex;
   margin-top: -15px;
-
-}
-
-#Div-bouton-podcast-background-téléphone {
-
-  display: none;
 
 }
 
@@ -924,37 +915,6 @@ body {
   margin: 0 auto;
   margin-top: 10px;
   display: flex;
-
-}
-
-.div-ligne {
-
-  display: none;
-
-}
-
-.div-bouton-podcast-background {
-
-
-  margin: 0 auto;
-  display: flex;
-  display: block;
-
-}
-
-.div-bouton-podcast-background:hover {
-
-
-  margin: 0 auto;
-  display: flex;
-  display: block;
-
-}
-
-#Div-bouton-podcast-background-téléphone {
-
-  display: block;
-  margin: 0 auto;
 
 }
 

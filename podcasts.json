@@ -1,0 +1,14 @@
+[
+    {
+        "nom_chronique": "Chronique scientifique",
+        "fichier_html": "podcasts-chroniques-scientifiques.html"
+    },
+    {
+        "nom_chronique": "Chronique touristique",
+        "fichier_html": "podcasts-chroniques-touristiques.html"
+    },
+    {
+        "nom_chronique": "Portrait",
+        "fichier_html": "podcasts-portraits.html"
+    }
+]
