@@ -1,0 +1,39 @@
+name: Raise error
+
+on:
+  push:
+    paths:
+      - '.github/error_trigger'
+
+jobs:
+  create-error:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get error content
+        id: get_content
+        run: |
+          CONTENT=$(cat .github/error_trigger)
+          echo "CONTENT<<EOF" >> $GITHUB_ENV
+          echo "$CONTENT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          
+      - name: Create error
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const [titleLine, ...bodyLines] = process.env.CONTENT.split('\n\n');
+            const title = titleLine.replace('title: ', '');
+            const body = bodyLines.join('\n\n');
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body
+            })
+            
+      - name: Clean up trigger file
+        run: rm .github/create_issue_trigger
