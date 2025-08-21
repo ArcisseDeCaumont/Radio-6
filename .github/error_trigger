@@ -1,3 +1,12 @@
-title: Test titre erreur 1
+title: Nouvelle erreur
 
-Test corps de l'erreur 1 !!
+
+                    **Nouvelle erreur :** Erreur générale
+                    
+                    **Erreur détaillée :** Erreur détaillée
+Plueisurs lignes
+                    **Outil utilisé :** Errors.py
+                 
+ **Informations supplémentaires :**
+    Info 1 : Contenu 1
+    Info 2 : Contenu 2
