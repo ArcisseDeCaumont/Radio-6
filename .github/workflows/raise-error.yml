@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/error_trigger'
 
+permissions:
+  issues: write
+
 jobs:
   create-error:
     runs-on: ubuntu-latest
