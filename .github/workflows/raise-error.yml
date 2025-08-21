@@ -39,4 +39,4 @@ jobs:
             })
             
       - name: Clean up trigger file
-        run: rm .github/create_issue_trigger
+        run: rm .github/error_trigger
