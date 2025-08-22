@@ -20,7 +20,7 @@ def finish_window(app) :
     # ╚> Création de la nouvelle fenêtre
     app = ctk.CTk()
     app.geometry("600x400")
-    app.title("ModifierSiteWeb")
+    app.title("WebsiteManager")
     ctk.set_appearance_mode("System")
     ctk.set_default_color_theme("blue")
 
@@ -69,7 +69,7 @@ def commit_changes(app) :
 # Création de la fenêtre CustomTkinter
 app = ctk.CTk()
 app.geometry("400x400")
-app.title("ModifierSiteWeb")
+app.title("WebsiteManager")
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
@@ -106,5 +106,8 @@ bouton_agenda.pack(pady=5)
 
 bouton_agenda = ctk.CTkButton(master=app, text="Gérer les catégories de podcasts", command=ajouter_émission)
 bouton_agenda.pack(pady=5)
+
+bouton_commit = ctk.CTkButton(master=app, text="Synchroniser avec GitHub", command=lambda : commit_changes(app))
+bouton_commit.pack(pady=5)
 
 app.mainloop()
