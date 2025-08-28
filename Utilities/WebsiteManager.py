@@ -64,7 +64,7 @@ def commit_changes(app) :
         Errors.raise_error(app, "Erreur lors de la synchronisation GitHub", "WebsiteManager.py", mail=True, specific_error=e)
         return "error"
     
-    return
+    finish_window(app)
 
 # Création de la fenêtre CustomTkinter
 app = ctk.CTk()
@@ -110,4 +110,5 @@ bouton_agenda.pack(pady=5)
 bouton_commit = ctk.CTkButton(master=app, text="Synchroniser avec GitHub", command=lambda : commit_changes(app))
 bouton_commit.pack(pady=5)
 
-app.mainloop()
+if __name__ == "__main__" :
+    app.mainloop()
