@@ -230,7 +230,7 @@ def process_info():
         Errors.raise_error(app, "Veuillez remplir tous les champs", "GérerPodcasts.py")
         return
 
-    # Suppression des caractères non autorisés pour les noms de fichiers
+    print(chroniques)
     for chronique in chroniques :
         if chronique.podcast == True :
             podcast_filename = f"{chronique.type} - "
@@ -244,7 +244,8 @@ def process_info():
             try :
                 # Découpage des podcasts depuis l'émission
                 audio_chronique = AudioSegment.from_file(audio_path)
-                audio_chronique = audio_chronique[int(chronique.timestamp_réel*1000):int(chroniques[chronique.index+1].timestamp_réel*1000)]
+                print(chronique.index)
+                audio_chronique = audio_chronique[int(chronique.timestamp_réel*1000):int(chroniques[chronique.index].timestamp_réel*1000)]
                 audio_chronique = audio_chronique.fade_in(1500)
                 audio_chronique = audio_chronique.fade_out(1500)
                 audio_chronique.export(podcast_filename, format="MP3")
@@ -284,7 +285,7 @@ def select_spreadsheet(app):
             # Récupération des informations contenues dans le nom du fichier
             spreadsheet_title = spreadsheet_path.split("/")[-1].split(" - ")[0]
             spreadsheet_date = spreadsheet_path.split("/")[-1].split(" - ")[1].replace("_","/")[:-5]
-            if len(spreadsheet_date.split("/")) == 3 and len(spreadsheet_date.split("/")[0]) == 2 and spreadsheet_date.split("/")[0].isdigit() == True and len(spreadsheet_date.split("/")[1]) == 2 and spreadsheet_date.split("/")[1].isdigit() == True and len(spreadsheet_date.split("/")[2]) == 2 and spreadsheet_date.split("/")[2].isdigit() == True : # Vérification du format de la date
+            if len(spreadsheet_date.split("/")) == 3 and len(spreadsheet_date.split("/")[0]) == 2 and spreadsheet_date.split("/")[0].isdigit() == True and len(spreadsheet_date.split("/")[1]) == 2 and spreadsheet_date.split("/")[1].isdigit() == True and len(spreadsheet_date.split("/")[2]) == 4 and spreadsheet_date.split("/")[2].isdigit() == True : # Vérification du format de la date
                 # Si tout est correct, affichage des informations dans la fenêtre
                 label_spreadsheet_path = ctk.CTkLabel(master=app, text=f"Fichier sélectionné : {spreadsheet_path}", width=165)
                 label_spreadsheet_title = ctk.CTkLabel(master=app, text=f"Nom enregistré : {spreadsheet_title}", width=165)
@@ -345,3 +346,6 @@ def main():
     bouton_validation.pack(pady=10)
 
     app.mainloop()
+
+if __name__ == "__main__" :
+    main()

@@ -41,10 +41,10 @@ def raise_error(previous_app, error, tool, mail = False, specific_error = None, 
 def send_email_error(general_error, specific_error, tool, additional_infos) :
     issue_title = "Nouvelle erreur"
     issue_body = f"""
-**Nouvelle erreur :** {general_error}
+**Nouvelle erreur :** {str(general_error).replace("é", "e").replace("É", "E")}
                     
-**Erreur detaillee :** {specific_error}
-**Outil utilise :** {tool}
+**Erreur detaillee :** {str(specific_error).replace("é", "e").replace("É", "E")}
+**Outil utilise :** {str(tool).replace("é", "e").replace("É", "E")}
                  """
     if additional_infos :
         issue_body += ("\n **Informations supplementaires :**")
