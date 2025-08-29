@@ -1,12 +1,12 @@
 title: Nouvelle erreur
 
 
-**Nouvelle erreur :** Erreur lors du découpage des podcasts
+**Nouvelle erreur :** Erreur lors du decoupage des podcasts
                     
-**Erreur detaillee :** [WinError 2] Le fichier spécifié est introuvable
-**Outil utilise :** AjouterÉmission.py
+**Erreur detaillee :** list index out of range
+**Outil utilise :** AjouterEmission.py
                  
  **Informations supplementaires :**
-    Audio path : C:/Users/oscar/Documents/GitHub/Radio-6/Émissions/2024.05 - Émission sportive.mp3
-    Filename : Chronique scientifique - Les-astuces-de-la-tournée-du-Père-Noël.mp3
-    Timestamp chronique : 18:29
+    Audio path : C:/Users/oscar/Documents/GitHub/Radio-6/Émissions/2024.12 - Émission de Noël.mp3
+    Filename : Chronique touristique - Un-tour-du-monde-des-traditions-de-Noël.mp3
+    Timestamp chronique : 39:35
