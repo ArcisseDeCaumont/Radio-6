@@ -1,12 +1,10 @@
 title: Nouvelle erreur
 
 
-**Nouvelle erreur :** Erreur generale
+**Nouvelle erreur :** Erreur lors de la lecture du fichier Excel
                     
-**Erreur detaillee :** Erreur detaillee
-Plusieurs lignes
-**Outil utilise :** Errors.py
+**Erreur detaillee :** Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+**Outil utilise :** Ajouter…mission.py
                  
  **Informations supplementaires :**
-    Info 1 : Contenu 1
-    Info 2 : Contenu 2
+    Audio path : 
