@@ -1,10 +1,12 @@
 title: Nouvelle erreur
 
 
-**Nouvelle erreur :** Erreur lors de la lecture du fichier Excel
+**Nouvelle erreur :** Erreur lors du découpage des podcasts
                     
-**Erreur detaillee :** Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+**Erreur detaillee :** [WinError 2] Le fichier spécifié est introuvable
 **Outil utilise :** AjouterÉmission.py
                  
  **Informations supplementaires :**
-    Audio path : 
+    Audio path : C:/Users/oscar/Documents/GitHub/Radio-6/Émissions/2024.05 - Émission sportive.mp3
+    Filename : Chronique scientifique - Les-astuces-de-la-tournée-du-Père-Noël.mp3
+    Timestamp chronique : 18:29
