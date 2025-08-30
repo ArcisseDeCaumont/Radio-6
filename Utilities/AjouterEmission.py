@@ -48,6 +48,7 @@ class Chronique:
         self.timestamp = timestamp
         self.timestamp_réel = timestamp
         self.podcast = False
+        self.fichier = ""
 
 def read_spreadsheet(path):
     global chroniques
@@ -195,7 +196,7 @@ def modify_html(podcast_filename):
 
                         <div class="div-audio-podcasts">
                             <audio controls class="audio" id="Audio{id_number}">
-                                <source src="Émissions/{os.path.basename(audio_path)[:-4]}/{podcast_filename}.mp3" type="audio/mpeg">
+                                <source src="Émissions/{os.path.basename(audio_path)[:-4]}/{chronique.fichier}" type="audio/mpeg">
                                 Votre navigateur ne supporte pas l'élément audio.
                             </audio>
                         </div>
@@ -250,6 +251,7 @@ def process_info():
                         char = "-"
                     podcast_filename += char
             podcast_filename += ".mp3"
+            chronique.fichier = podcast_filename
             try :
                 # Découpage des podcasts depuis l'émission
                 audio_chronique = AudioSegment.from_file(audio_path)
