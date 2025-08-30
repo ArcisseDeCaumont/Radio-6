@@ -161,11 +161,15 @@ def modify_html(podcast_filename):
         dates_émissions = soup.find_all("h3", {"class" : "date-émission"})
             # ╚> Placement de la nouvelle émission dans l'ordre chronologique
         spreadsheet_date_formatted = datetime.strptime(spreadsheet_date, "%d/%m/%Y")
-        for date in dates_émissions :
-            if datetime.strptime(date.text, '%d/%m/%Y') < spreadsheet_date_formatted :
-                soup.find("div", {"class" : "conteneur-émissions"}).insert(dates_émissions.index(date), soup_ajout)
-                print(soup)
-                break
+        written = False
+        if dates_émissions :
+            for date in dates_émissions :
+                if datetime.strptime(date.text, '%d/%m/%Y') > spreadsheet_date_formatted :
+                    soup.find("div", {"class" : "conteneur-émissions"}).insert(dates_émissions.index(date) + 1, soup_ajout)
+                    written = True
+                    break
+        if written == False :
+            soup.find("div", {"class" : "conteneur-émissions"}).insert(0, soup_ajout)
         # Écriture dans le fichier HTML
         with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/émissions.html", "w", encoding="utf-8") as f :
             f.write(str(soup))
@@ -202,10 +206,14 @@ def modify_html(podcast_filename):
                 # Placement du podcast dans l'ordre chronologique
                 dates_émissions = soup.find_all("h3", {"class" : "date-émission"})
                 spreadsheet_date_formatted = datetime.strptime(spreadsheet_date, "%d/%m/%Y")
-                for date in dates_émissions :
-                    if datetime.strptime(date.text.split(" - ")[-1], '%d/%m/%Y') < spreadsheet_date_formatted :
-                        soup.find("div", {"class" : "conteneur-podcasts"}).insert(dates_émissions.index(date), soup_ajout_chroniques)
-                        break
+                written = False
+                if dates_émissions :
+                    for date in dates_émissions :
+                        if datetime.strptime(date.text.split(" - ")[-1], '%d/%m/%Y') > spreadsheet_date_formatted :
+                            soup.find("div", {"class" : "conteneur-podcasts"}).insert(dates_émissions.index(date) + 1, soup_ajout_chroniques)
+                            break
+                if written == False :
+                    soup.find("div", {"class" : "conteneur-podcasts"}).insert(0, soup_ajout_chroniques)
                 # Écriture dans le fichier HTML
                 with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/{noms_chroniques_podcasts[chronique.type]}", "w", encoding="utf-8") as f :
                     f.write(str(soup))

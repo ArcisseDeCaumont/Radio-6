@@ -8,6 +8,10 @@
         "fichier_html": "podcasts-chroniques-touristiques.html"
     },
     {
+        "nom_chronique": "Chronique culturelle",
+        "fichier_html": "podcasts-chroniques-culturelles.html"
+    },
+    {
         "nom_chronique": "Portrait",
         "fichier_html": "podcasts-portraits.html"
     }
