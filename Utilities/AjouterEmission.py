@@ -164,6 +164,7 @@ def modify_html(podcast_filename):
         for date in dates_émissions :
             if datetime.strptime(date.text, '%d/%m/%Y') < spreadsheet_date_formatted :
                 soup.find("div", {"class" : "conteneur-émissions"}).insert(dates_émissions.index(date), soup_ajout)
+                print(soup)
                 break
         # Écriture dans le fichier HTML
         with open(f"C:/Users/{os.getlogin()}/Documents/GitHub/Radio-6/émissions.html", "w", encoding="utf-8") as f :
