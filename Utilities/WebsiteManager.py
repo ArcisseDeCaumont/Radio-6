@@ -30,6 +30,8 @@ def finish_window(app) :
     label_finished2 = ctk.CTkLabel(master=app, text="Le programme a fini de s'exécuter, vous pouvez fermer cette fenêtre", width=200)
     label_finished2.pack(pady=0)
 
+    app.mainloop()
+
     # ╚> Délai de 60 secondes
     time.sleep(60)
     # ╚> Arrêt du programme

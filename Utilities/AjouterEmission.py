@@ -256,7 +256,7 @@ def process_info():
                 # Découpage des podcasts depuis l'émission
                 audio_chronique = AudioSegment.from_file(audio_path)
                 print(chronique.index)
-                audio_chronique = audio_chronique[int(chronique.timestamp_réel*1000):int(chroniques[chronique.index].timestamp_réel*1000)]
+                audio_chronique = audio_chronique[int(chronique.timestamp_réel*750):int(chroniques[chronique.index].timestamp_réel*750)]
                 audio_chronique = audio_chronique.fade_in(1500)
                 audio_chronique = audio_chronique.fade_out(1500)
                 audio_chronique.export(podcast_filename, format="MP3")
